@@ -10,17 +10,17 @@ const Slider = ({ products }) => {
     <>
       <Container className="my-5">
         <div className="d-flex justify-content-between my-5">
-          <h1>
+          <h1 className="mx-sm-auto mx-md-0">
             <Badge className="bg-danger px-5 py-3 shadow">
               SALE! <Tags className="ms-3" size={40} />
             </Badge>
           </h1>
-          <div className="d-flex flex-column align-items-end">
+          <div className="flex-column align-items-end d-none d-md-flex">
             <p className="text-muted h5 mb-0">Check out</p>
             <h1 className="display-5">Our best products</h1>
           </div>
         </div>
-        <Carousel className="w-100 bg-dark py-5">
+        <Carousel className="w-100 bg-dark py-3">
           <Carousel.Item interval={3000}>
             <Slide slide={slides[0]} />
           </Carousel.Item>

@@ -68,7 +68,7 @@ function App() {
     <>
       <BrowserRouter>
         <NavbarComponent totalItems={totalItems} />
-        <div style={{ marginTop: "100px" }} />
+        <div style={{ marginTop: "130px" }} />
         <Switch>
           <Route exact path="/">
             {loading ? <Loading /> : ""}

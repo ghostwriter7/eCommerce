@@ -33,7 +33,10 @@ const Slide = ({ slide }) => {
           </h1>
         </div>
       </Col>
-      <Col md={4} className="d-flex align-items-center ">
+      <Col
+        md={4}
+        className="d-flex align-items-center justify-content-center justify-content-md-start"
+      >
         <img
           className="img-fluid img-thumbnail shadow-lg"
           style={{ height: "75%" }}
