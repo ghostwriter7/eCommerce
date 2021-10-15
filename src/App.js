@@ -46,6 +46,12 @@ function App() {
     }
   };
 
+  const handleUpdateCartQty = async (productId, quantity) => {
+    const { cart } = await commerce.cart.update(productId, { quantity });
+    setCart(cart);
+    setTotalItems(cart.total_items);
+  };
+
   return (
     <>
       <BrowserRouter>
@@ -57,7 +63,7 @@ function App() {
             <ProductsList products={products} onAddToCart={handleAddToCart} />
           </Route>
           <Route exact path="/cart">
-            <Cart cart={cart} />
+            {cart && <Cart cart={cart} onUpdateCartQty={handleUpdateCartQty} />}
           </Route>
         </Switch>
       </BrowserRouter>

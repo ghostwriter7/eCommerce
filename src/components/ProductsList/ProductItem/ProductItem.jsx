@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Card, Button } from "react-bootstrap";
 import { CartPlus } from "react-bootstrap-icons";
-const variants = ["danger", "warning"];
+const variants = ["light", "dark"];
 
 const ProductItem = ({ product, idx, onAddToCart }) => {
   return (
@@ -14,7 +14,7 @@ const ProductItem = ({ product, idx, onAddToCart }) => {
             variant="top"
             src={product.image.url}
           />
-          <Card.Body>
+          <Card.Body className={idx % 2 ? "text-dark" : "text-light"}>
             <Card.Title>{product.name}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">
               {product.description.replace(/<\/?p>/g, "")}
