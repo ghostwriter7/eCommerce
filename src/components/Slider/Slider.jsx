@@ -8,9 +8,9 @@ const Slider = ({ products }) => {
 
   return (
     <>
-      <Container className="my-5">
-        <div className="d-flex justify-content-between my-5">
-          <h1 className="mx-sm-auto mx-md-0">
+      <Container className="mt-5">
+        <div className="d-flex justify-content-between">
+          <h1 className="mx-auto mx-md-0">
             <Badge className="bg-danger px-5 py-3 shadow">
               SALE! <Tags className="ms-3" size={40} />
             </Badge>
@@ -20,7 +20,7 @@ const Slider = ({ products }) => {
             <h1 className="display-5">Our best products</h1>
           </div>
         </div>
-        <Carousel className="w-100 bg-dark py-3">
+        <Carousel variant="dark" className="w-100 py-3">
           <Carousel.Item interval={3000}>
             <Slide slide={slides[0]} />
           </Carousel.Item>

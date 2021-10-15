@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Col, Badge } from "react-bootstrap";
+import { Tags } from "react-bootstrap-icons";
 
 const Slide = ({ slide }) => {
   return (
@@ -9,13 +10,13 @@ const Slide = ({ slide }) => {
         className="d-flex py-5 justify-content-center align-items-center gap-5 flex-column"
       >
         <div>
-          <h1 className="display-4 text-light">
+          <h1 className="display-5 text-dark">
             {slide.name}
             <Badge bg="danger" className="ms-3">
               New
             </Badge>
           </h1>
-          <p className="text-muted h3 mt-3">
+          <p className="text-muted h4 mt-3">
             {slide.description.replace(/<\/?p>/g, "")}
           </p>
         </div>
@@ -35,11 +36,16 @@ const Slide = ({ slide }) => {
       </Col>
       <Col
         md={4}
-        className="d-flex align-items-center justify-content-center justify-content-md-start"
+        className="d-flex align-items-center justify-content-center justify-content-md-start position-relative"
       >
+        <Badge
+          className="bg-danger px-3 shadow position-absolute d-none d-md-block"
+          style={{ top: "15%", right: "20%", transform: "rotate(45deg)" }}
+        >
+          SALE! <Tags className="ms-3" size={20} />
+        </Badge>
         <img
-          className="img-fluid img-thumbnail shadow-lg"
-          style={{ height: "75%" }}
+          className="img-fluid img-thumbnail shadow-lg h-75"
           src={slide.media.source}
           alt={slide.name}
         />

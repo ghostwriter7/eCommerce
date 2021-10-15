@@ -89,7 +89,7 @@ function App() {
             )}
           </Route>
           <Route exact path="/checkout">
-            <Checkout />
+            {cart && <Checkout cart={cart} />}
           </Route>
         </Switch>
       </BrowserRouter>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Container, Button, Badge, Stack, Nav } from "react-bootstrap";
+import { Navbar, Container, Button, Badge, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Asterisk, Cart } from "react-bootstrap-icons";
 
