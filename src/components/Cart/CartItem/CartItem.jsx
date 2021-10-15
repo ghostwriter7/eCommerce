@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Col, Button } from "react-bootstrap";
 import { Dash, Plus, CartDash } from "react-bootstrap-icons";
 
-const CartItem = ({ item, onUpdateCartQty }) => {
+const CartItem = ({ item, onUpdateCartQty, onRemoveFromCart }) => {
   return (
     <Col key={item.id}>
       <Card bg="dark">
@@ -33,7 +33,11 @@ const CartItem = ({ item, onUpdateCartQty }) => {
                 <Plus size="25" />
               </Button>
             </div>
-            <Button variant="danger" className="px-3">
+            <Button
+              variant="danger"
+              className="px-3"
+              onClick={() => onRemoveFromCart(item.id)}
+            >
               <CartDash size="25" /> Remove
             </Button>
           </div>

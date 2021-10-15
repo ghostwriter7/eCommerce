@@ -52,6 +52,18 @@ function App() {
     setTotalItems(cart.total_items);
   };
 
+  const handleRemoveFromCart = async (productId) => {
+    const { cart } = await commerce.cart.remove(productId);
+    setCart(cart);
+    setTotalItems(cart.total_items);
+  };
+
+  const handleEmptyCart = async () => {
+    const { cart } = await commerce.cart.empty();
+    setCart(cart);
+    setTotalItems(cart.total_items);
+  };
+
   return (
     <>
       <BrowserRouter>
@@ -63,7 +75,14 @@ function App() {
             <ProductsList products={products} onAddToCart={handleAddToCart} />
           </Route>
           <Route exact path="/cart">
-            {cart && <Cart cart={cart} onUpdateCartQty={handleUpdateCartQty} />}
+            {cart && (
+              <Cart
+                cart={cart}
+                onUpdateCartQty={handleUpdateCartQty}
+                onRemoveFromCart={handleRemoveFromCart}
+                onEmptyCart={handleEmptyCart}
+              />
+            )}
           </Route>
         </Switch>
       </BrowserRouter>
