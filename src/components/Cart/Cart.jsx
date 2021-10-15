@@ -15,7 +15,8 @@ const Cart = ({ cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart }) => {
             <Col sm={8}>
               <h1 className="display-3">Your cart is empty</h1>
               <p className="h5 text-muted">
-                <Link to="/"> Go back to the shop </Link> and start shopping!{" "}
+                <Link to="/shop"> Go back to the shop </Link> and start
+                shopping!{" "}
               </p>
             </Col>
             <Col sm={4} className="d-flex justify-content-center mt-5">
@@ -49,10 +50,12 @@ const Cart = ({ cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart }) => {
                 <BagX size="25" className="me-2" />
                 Empty
               </Button>
-              <Button size="lg" variant="outline-dark">
-                <CartCheckFill size="25" className="me-2" />
-                Checkout
-              </Button>
+              <Link to="/checkout">
+                <Button size="lg" variant="outline-dark">
+                  <CartCheckFill size="25" className="me-2" />
+                  Checkout
+                </Button>
+              </Link>
             </Stack>
           </Container>
           <Row md={2} lg={3} className="g-4">

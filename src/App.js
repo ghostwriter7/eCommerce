@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { commerce } from "./lib/commerce";
 //prettier-ignore
-import {ProductsList, Loading, NavbarComponent, Cart} from './components/index';
+import {ProductsList, Loading, NavbarComponent, Cart, Checkout, Slider} from './components/index';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -72,6 +72,10 @@ function App() {
         <Switch>
           <Route exact path="/">
             {loading ? <Loading /> : ""}
+            {products.length && <Slider products={products} />}
+          </Route>
+          <Route exact path="/shop">
+            {loading ? <Loading /> : ""}
             <ProductsList products={products} onAddToCart={handleAddToCart} />
           </Route>
           <Route exact path="/cart">
@@ -83,6 +87,9 @@ function App() {
                 onEmptyCart={handleEmptyCart}
               />
             )}
+          </Route>
+          <Route exact path="/checkout">
+            <Checkout />
           </Route>
         </Switch>
       </BrowserRouter>
