@@ -78,7 +78,8 @@ function App() {
       refreshCart();
       return true;
     } catch (error) {
-      console.log("Error occured while capturing checkout", error);
+      // console.log("Error occured while capturing checkout", error);
+      throw error;
     }
   };
 
@@ -125,6 +126,7 @@ function App() {
             <Confirmation order={order} />
           </Route>
         </Switch>
+        <div style={{ height: "100px" }} />
       </BrowserRouter>
     </>
   );

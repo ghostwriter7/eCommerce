@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Loading from "../Loading/Loading";
+import OrderSummary from "./OrderSummary";
 import { Container, Row, Form, Col, Button, Spinner } from "react-bootstrap";
 import { commerce } from "../../lib/commerce";
 import FormInput from "./FormInput";
@@ -8,6 +9,7 @@ import FormInput from "./FormInput";
 const Checkout = ({ cart, onCaptureCheckout }) => {
   const [checkoutToken, setCheckoutToken] = useState({});
   const [loading, setLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState("");
   let history = useHistory();
 
   //INPUTS
@@ -168,16 +170,23 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
         },
       },
     };
-    onCaptureCheckout(checkoutToken.id, orderData).then(() => {
-      setSendingOrder(false);
-      history.push("/confirmation");
-    });
+    onCaptureCheckout(checkoutToken.id, orderData)
+      .then(() => {
+        setSendingOrder(false);
+        history.push("/confirmation");
+      })
+      .catch((error) => {
+        setSendingOrder(false);
+        setErrorMsg(error.data.error.message);
+      });
   };
 
   return loading ? (
     <Loading />
   ) : (
     <Container fluid="md">
+      <OrderSummary cart={cart} />
+      <h1 className="mb-5">Shipping & Payment</h1>
       <Form>
         <Row sm={1} md={2}>
           <FormInput
