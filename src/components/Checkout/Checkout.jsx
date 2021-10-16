@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Loading from "../Loading/Loading";
-import { Container, Row, Form, Col } from "react-bootstrap";
+import { Container, Row, Form, Col, Button, Spinner } from "react-bootstrap";
 import { commerce } from "../../lib/commerce";
 import FormInput from "./FormInput";
 
-const Checkout = ({ cart }) => {
+const Checkout = ({ cart, onCaptureCheckout }) => {
   const [checkoutToken, setCheckoutToken] = useState({});
   const [loading, setLoading] = useState(true);
+  let history = useHistory();
 
   //INPUTS
   const [firstName, setFirstName] = useState("Joe");
@@ -27,6 +29,8 @@ const Checkout = ({ cart }) => {
   const [shippingSubdivision, setShippingSubdivision] = useState("");
   const [shippingOptions, setShippingOptions] = useState([]);
   const [shippingOption, setShippingOption] = useState("");
+
+  const [sendingOrder, setSendingOrder] = useState(false);
 
   const generateCheckoutToken = async () => {
     if (cart.line_items.length) {
@@ -113,6 +117,62 @@ const Checkout = ({ cart }) => {
       shippingSubdivision
     );
   }, [shippingSubdivision]);
+
+  const sanitizedLineItems = (lineItems) => {
+    return lineItems.reduce((data, lineItem) => {
+      const item = data;
+      let variantData = null;
+      if (lineItem.selected_options?.length) {
+        variantData = {
+          [lineItem.selected_options[0].group_id]:
+            lineItem.selected_options[0].option_id,
+        };
+      }
+      item[lineItem.id] = {
+        quantity: lineItem.quantity,
+        variants: variantData,
+      };
+      return item;
+    }, {});
+  };
+
+  const handleCaptureCheckout = (e) => {
+    e.preventDefault();
+    setSendingOrder(true);
+    const orderData = {
+      line_items: sanitizedLineItems(cart.line_items),
+      customer: {
+        firstname: firstName,
+        lastname: lastName,
+        email: email,
+      },
+      shipping: {
+        name: shippingName,
+        street: shippingStreet,
+        town_city: shippingCity,
+        county_state: shippingSubdivision,
+        postal_zip_code: shippingZipCode,
+        country: shippingCountry,
+      },
+      fulfillment: {
+        shipping_method: shippingOption.id,
+      },
+      payment: {
+        gateway: "test_gateway",
+        card: {
+          number: cardNum,
+          expiry_month: expMonth,
+          expiry_year: expYear,
+          cvc: ccv,
+          postal_zip_code: billingZipCode,
+        },
+      },
+    };
+    onCaptureCheckout(checkoutToken.id, orderData).then(() => {
+      setSendingOrder(false);
+      history.push("/confirmation");
+    });
+  };
 
   return loading ? (
     <Loading />
@@ -225,7 +285,6 @@ const Checkout = ({ cart }) => {
                 onChange={(e) => setShippingCountry(e.target.value)}
                 value={shippingCountry}
               >
-                <option disabled>Country</option>
                 {shippingCountries.map((country, index) => (
                   <option key={index} value={country.countryCode}>
                     {country.country}
@@ -257,6 +316,7 @@ const Checkout = ({ cart }) => {
               <Form.Select
                 id="options"
                 aria-label="Selection of shipping options"
+                value={shippingOption.id}
               >
                 {shippingOptions.map((option, idx) => (
                   <option key={idx} value={option.id}>
@@ -265,6 +325,23 @@ const Checkout = ({ cart }) => {
                 ))}
               </Form.Select>
             </Form.Group>
+          </Col>
+          <Col className="d-flex justify-content-center align-items-center">
+            <Button
+              variant="danger"
+              type="submit"
+              size="lg"
+              onClick={(e) => handleCaptureCheckout(e)}
+            >
+              {sendingOrder ? (
+                <>
+                  <Spinner animation="border" role="status" />{" "}
+                  <span>Loading...</span>
+                </>
+              ) : (
+                "Confirm your order"
+              )}
+            </Button>
           </Col>
         </Row>
       </Form>

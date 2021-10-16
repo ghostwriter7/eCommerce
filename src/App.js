@@ -3,13 +3,20 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { commerce } from "./lib/commerce";
 //prettier-ignore
-import {ProductsList, Loading, NavbarComponent, Cart, Checkout, Slider} from './components/index';
+import {ProductsList, Loading, NavbarComponent, Cart, Checkout, Slider, Confirmation} from './components/index';
 
 function App() {
   const [products, setProducts] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [order, setOrder] = useState({
+    merchant: {},
+    products: [],
+    cart: {},
+    isCartVisible: false,
+    order: {},
+  });
 
   const fetchProducts = async () => {
     try {
@@ -64,6 +71,27 @@ function App() {
     setTotalItems(cart.total_items);
   };
 
+  const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
+    try {
+      const order = await commerce.checkout.capture(checkoutTokenId, newOrder);
+      setOrder(order);
+      refreshCart();
+      return true;
+    } catch (error) {
+      console.log("Error occured while capturing checkout", error);
+    }
+  };
+
+  const refreshCart = async () => {
+    try {
+      const newCart = await commerce.cart.refresh();
+      setCart(newCart);
+      setTotalItems(newCart.total_items);
+    } catch (error) {
+      console.log("Error occured while refreshing cart", error);
+    }
+  };
+
   return (
     <>
       <BrowserRouter>
@@ -89,7 +117,12 @@ function App() {
             )}
           </Route>
           <Route exact path="/checkout">
-            {cart && <Checkout cart={cart} />}
+            {cart && (
+              <Checkout cart={cart} onCaptureCheckout={handleCaptureCheckout} />
+            )}
+          </Route>
+          <Route exact path="/confirmation">
+            <Confirmation order={order} />
           </Route>
         </Switch>
       </BrowserRouter>

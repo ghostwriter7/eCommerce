@@ -6,7 +6,6 @@ import { Asterisk, Cart } from "react-bootstrap-icons";
 
 const NavbarComponent = ({ totalItems }) => {
   const location = useLocation();
-
   return (
     <>
       <Navbar
