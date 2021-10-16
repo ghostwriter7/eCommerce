@@ -6,6 +6,10 @@ const ProductsList = ({ products, onAddToCart }) => {
   return (
     <>
       <Container fluid="md">
+        <div className="flex-column align-items-end d-none d-md-flex">
+          <p className="text-muted h5 mb-0">Latest Collection</p>
+          <h1 className="display-5">Hghest quality</h1>
+        </div>
         <Row xs={1} sm={2} lg={3}>
           {products.map((product, idx) => (
             <ProductItem
