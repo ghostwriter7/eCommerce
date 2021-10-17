@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/index.css"],"names":[],"mappings":"AAAA,KACE,gBACF,CAEA,EACE,8BACF","file":"main.9ec81ea0.chunk.css","sourcesContent":["body {\n  min-height: 100vh;\n}\n\na {\n  text-decoration: none !important;\n}\n"]}
