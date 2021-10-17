@@ -1,6 +1,15 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { Navbar, Container, Button, Badge, Nav } from "react-bootstrap";
+import {
+  Navbar,
+  Container,
+  Button,
+  Badge,
+  Nav,
+  Col,
+  Row,
+  Stack,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Asterisk, Cart } from "react-bootstrap-icons";
 
@@ -17,7 +26,9 @@ const NavbarComponent = ({ totalItems }) => {
         <Container fluid="md">
           <Link to="/">
             <Navbar.Brand className="text-light">
-              <Asterisk /> Our cool logo
+              <Cart className="me-1 text-danger" />
+              <span className="h5">JackieStore</span>
+              <small className="text-uppercase text-danger"> Hand-made</small>
             </Navbar.Brand>
           </Link>
           <Navbar.Toggle

@@ -2,14 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import OrderSummary from "./OrderSummary";
-import { Container, Row, Form, Col, Button, Spinner } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Form,
+  Col,
+  Button,
+  Spinner,
+  Alert,
+} from "react-bootstrap";
 import { commerce } from "../../lib/commerce";
 import FormInput from "./FormInput";
 
 const Checkout = ({ cart, onCaptureCheckout }) => {
   const [checkoutToken, setCheckoutToken] = useState({});
   const [loading, setLoading] = useState(true);
-  const [errorMsg, setErrorMsg] = useState("");
   let history = useHistory();
 
   //INPUTS
@@ -177,7 +184,7 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
       })
       .catch((error) => {
         setSendingOrder(false);
-        setErrorMsg(error.data.error.message);
+        history.push("/error");
       });
   };
 
@@ -186,6 +193,21 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
   ) : (
     <Container fluid="md">
       <OrderSummary cart={cart} />
+      <Alert className="mb-5" variant="danger">
+        <Alert.Heading>
+          Hi! This form is still under construction!
+        </Alert.Heading>
+        <p>
+          Type real e-mail if you want to receive a fake confirmation at your
+          e-mail. Otherwise, submit you order and let's hope that Joe will enjoy
+          the goods you've chosen.
+        </p>
+        <hr />
+        <p className="mb-0">
+          If you want an error component to be rendered, mess up with it (for
+          instance, change country to US and remove last digit from ZIP Code)
+        </p>
+      </Alert>
       <h1 className="mb-5">Shipping & Payment</h1>
       <Form>
         <Row sm={1} md={2}>
@@ -245,38 +267,7 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
             label="Shipping ZIP code"
             type="text"
           />
-          <FormInput
-            value={cardNum}
-            id="cardNum"
-            placeholder="Your card number"
-            onChange={(e) => setCardNum(e.target.value)}
-            label="Card Number"
-            type="text"
-          />
-          <FormInput
-            value={expMonth}
-            id="expMonth"
-            placeholder="Expiration month"
-            onChange={(e) => setExpMonth(e.target.value)}
-            label="Card's expiration month"
-            type="number"
-          />
-          <FormInput
-            value={expYear}
-            id="expYear"
-            placeholder="Expiration year"
-            onChange={(e) => setExpYear(e.target.value)}
-            label="Card's expiration year"
-            type="number"
-          />
-          <FormInput
-            value={ccv}
-            id="ccv"
-            placeholder="CCV"
-            onChange={(e) => setCcv(e.target.value)}
-            label="CCV"
-            type="number"
-          />
+
           <FormInput
             value={billingZipCode}
             id="billingZipCode"
@@ -335,8 +326,44 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
               </Form.Select>
             </Form.Group>
           </Col>
+          <Col md={12}>
+            <hr />
+          </Col>
+          <FormInput
+            value={cardNum}
+            id="cardNum"
+            placeholder="Your card number"
+            onChange={(e) => setCardNum(e.target.value)}
+            label="Card Number"
+            type="text"
+          />
+          <FormInput
+            value={expMonth}
+            id="expMonth"
+            placeholder="Expiration month"
+            onChange={(e) => setExpMonth(e.target.value)}
+            label="Card's expiration month"
+            type="number"
+          />
+          <FormInput
+            value={expYear}
+            id="expYear"
+            placeholder="Expiration year"
+            onChange={(e) => setExpYear(e.target.value)}
+            label="Card's expiration year"
+            type="number"
+          />
+          <FormInput
+            value={ccv}
+            id="ccv"
+            placeholder="CCV"
+            onChange={(e) => setCcv(e.target.value)}
+            label="CCV"
+            type="number"
+          />
           <Col className="d-flex justify-content-center align-items-center">
             <Button
+              className="w-100 mt-5"
               variant="danger"
               type="submit"
               size="lg"

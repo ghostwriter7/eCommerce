@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { commerce } from "./lib/commerce";
 //prettier-ignore
-import {ProductsList, Loading, NavbarComponent, Cart, Checkout, Slider, Confirmation} from './components/index';
+import {ProductsList, Loading, NavbarComponent, Cart, Checkout, Slider, Confirmation, Error} from './components/index';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -17,6 +17,7 @@ function App() {
     isCartVisible: false,
     order: {},
   });
+  const [error, setError] = useState("");
 
   const fetchProducts = async () => {
     try {
@@ -78,7 +79,7 @@ function App() {
       refreshCart();
       return true;
     } catch (error) {
-      // console.log("Error occured while capturing checkout", error);
+      setError(error);
       throw error;
     }
   };
@@ -124,6 +125,9 @@ function App() {
           </Route>
           <Route exact path="/confirmation">
             <Confirmation order={order} />
+          </Route>
+          <Route exact path="/error">
+            <Error error={error} />
           </Route>
         </Switch>
         <div style={{ height: "100px" }} />
