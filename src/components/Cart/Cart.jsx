@@ -36,30 +36,35 @@ const Cart = ({ cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart }) => {
       <>
         <Container fluid="md" className="mb-5">
           <Container fluid className="d-flex justify-content-between my-5">
-            <Stack>
-              <h1 className="mb-0">Your shopping cart: </h1>
-
-              <p className="display-5">
-                <span className="text-muted">Subtotal:</span>{" "}
-                {cart.subtotal.formatted_with_symbol}
-              </p>
-            </Stack>
-            <Stack direction="horizontal" gap={3}>
-              <Button
-                size="lg"
-                variant="outline-danger"
-                onClick={() => onEmptyCart()}
-              >
-                <BagX size="25" className="me-2" />
-                Empty
-              </Button>
-              <Link to="/checkout">
-                <Button size="lg" variant="outline-dark">
-                  <CartCheckFill size="25" className="me-2" />
-                  Checkout
-                </Button>
-              </Link>
-            </Stack>
+            <Row>
+              <Col sm={12} md={6}>
+                <Stack>
+                  <h1 className="mb-0">Your shopping cart: </h1>
+                  <p className="display-5">
+                    <span className="text-muted">Subtotal:</span>{" "}
+                    {cart.subtotal.formatted_with_symbol}
+                  </p>
+                </Stack>
+              </Col>
+              <Col sm={12} md={6}>
+                <Stack direction="horizontal" gap={3}>
+                  <Button
+                    size="lg"
+                    variant="outline-danger"
+                    onClick={() => onEmptyCart()}
+                  >
+                    <BagX size="25" className="me-2" />
+                    Empty
+                  </Button>
+                  <Link to="/checkout">
+                    <Button size="lg" variant="outline-dark">
+                      <CartCheckFill size="25" className="me-2" />
+                      Checkout
+                    </Button>
+                  </Link>
+                </Stack>
+              </Col>
+            </Row>
           </Container>
           <Row md={2} lg={3} className="g-4">
             {cart.line_items.map((item) => (

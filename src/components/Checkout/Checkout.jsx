@@ -210,7 +210,7 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
       </Alert>
       <h1 className="mb-5">Shipping & Payment</h1>
       <Form>
-        <Row sm={1} md={2}>
+        <Row xs={1} sm={2}>
           <FormInput
             value={firstName}
             id="firstName"
@@ -326,7 +326,7 @@ const Checkout = ({ cart, onCaptureCheckout }) => {
               </Form.Select>
             </Form.Group>
           </Col>
-          <Col md={12}>
+          <Col sm={12}>
             <hr />
           </Col>
           <FormInput
